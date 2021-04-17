@@ -175,7 +175,7 @@ namespace Globals
 
     AndrewsMQTT MyMQTT = AndrewsMQTT();
 
-    WifiConnector MyWifi("Deepbot", "Shirley1");
+    WifiConnector MyWifi("SSID", "PASSWORD");
 
     void Setup()
     {
