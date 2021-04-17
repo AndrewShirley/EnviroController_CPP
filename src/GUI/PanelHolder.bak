@@ -1,0 +1,65 @@
+#include <map>
+#include "GUI/GraphicObjectBase.h"
+using namespace std;
+
+
+
+
+class PanelHolder{
+    private:
+        std::map<string, GraphicObjectBase *> Items = {};
+
+    public:
+        void AddItem(string KeyName, GraphicObjectBase *O)
+        {
+            this->Items[KeyName] = O;
+        }
+
+        bool HasItem(string KeyName)
+        {
+            std::map<string, GraphicObjectBase *>::iterator IR;
+            IR = this->Items.find(KeyName);
+
+            return (IR != this->Items.end());
+        }
+
+        GraphicObjectBase * GetItem(string KeyName)
+        {
+            std::map<string, GraphicObjectBase *>::iterator IR;
+            IR = this->Items.find(KeyName);
+
+            if(IR != this->Items.end())
+                return IR->second;
+
+            return nullptr;
+        }
+
+        std::map<string, GraphicObjectBase *> GetItemsObj()
+        {
+            return this->Items;
+        }
+
+
+        // Checks all the items in the Items array to see if any needs drawing.
+        bool NeedsDrawing()
+        {
+            for(auto const& I : this->Items)
+                if(I.second->getNeedsDrawing())
+                    return true;
+
+            return false;
+        }
+
+        void Draw(Adafruit_GFX &Gfx)
+        {
+            GraphicObjectBase *B;
+
+            for(auto const& I : this->Items)
+                B = I.second;                
+                if(B->getVisible())
+                    B ->Draw(Gfx);
+        }
+
+};
+
+
